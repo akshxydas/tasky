@@ -47,7 +47,7 @@ const TaskCard = ({ task, onEdit, statusInfo }) => {
           <div className="flex items-center gap-4 mt-1 text-sm text-gray-500 dark:text-gray-400">
             <span className="flex items-center gap-1">
               <User className="w-3.5 h-3.5" />
-              {task.assignedTo}
+              {task.assignedTo || 'Unassigned'}
             </span>
             {task.dueDate && (
               <span className={`flex items-center gap-1 ${statusInfo.isOverdue ? 'text-red-500 font-medium' : ''}`}>

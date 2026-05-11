@@ -33,7 +33,7 @@ const TaskBoard = () => {
         const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                               task.description.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = statusFilter === 'all' ? true : task.status === statusFilter;
-        const matchesAssignee = assigneeFilter === 'All' ? true : task.assignedTo === assigneeFilter;
+        const matchesAssignee = assigneeFilter === 'All' ? true : (task.assignedTo || '') === assigneeFilter;
         return matchesSearch && matchesStatus && matchesAssignee;
       })
       .sort((a, b) => {
@@ -121,6 +121,7 @@ const TaskBoard = () => {
               {TEAM_MEMBERS.map(m => (
                 <option key={m} value={m}>{m}</option>
               ))}
+              <option value="">Unassigned</option>
             </select>
 
             <select

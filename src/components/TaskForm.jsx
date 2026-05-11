@@ -9,7 +9,7 @@ const TaskForm = ({ onClose, taskToEdit }) => {
   
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [assignedTo, setAssignedTo] = useState(TEAM_MEMBERS[0]);
+  const [assignedTo, setAssignedTo] = useState('');
   const [dueDate, setDueDate] = useState('');
 
   const [subtasks, setSubtasks] = useState([]);
@@ -19,7 +19,7 @@ const TaskForm = ({ onClose, taskToEdit }) => {
     if (taskToEdit) {
       setTitle(taskToEdit.title);
       setDescription(taskToEdit.description || '');
-      setAssignedTo(taskToEdit.assignedTo);
+      setAssignedTo(taskToEdit.assignedTo || '');
       setDueDate(taskToEdit.dueDate || '');
       setSubtasks(taskToEdit.subtasks || []);
     }
@@ -134,6 +134,7 @@ const TaskForm = ({ onClose, taskToEdit }) => {
                 onChange={(e) => setAssignedTo(e.target.value)}
                 className="input-field"
               >
+                <option value="">Unassigned</option>
                 {TEAM_MEMBERS.map(m => (
                   <option key={m} value={m}>{m}</option>
                 ))}
