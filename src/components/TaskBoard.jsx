@@ -58,8 +58,33 @@ const TaskBoard = () => {
     return { isOverdue };
   };
 
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter(t => t.status === 'completed').length;
+  const pendingTasks = tasks.filter(t => t.status !== 'completed').length;
+  const overdueTasks = tasks.filter(t => t.status !== 'completed' && t.dueDate && isBefore(parseISO(t.dueDate), today)).length;
+
   return (
     <div className="flex flex-col h-full space-y-6">
+      {/* Analysis Dashboard */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center">
+          <span className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Total Tasks</span>
+          <span className="text-3xl font-bold text-blue-600 dark:text-blue-400">{totalTasks}</span>
+        </div>
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center">
+          <span className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Completed</span>
+          <span className="text-3xl font-bold text-green-600 dark:text-green-400">{completedTasks}</span>
+        </div>
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center">
+          <span className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Pending</span>
+          <span className="text-3xl font-bold text-amber-600 dark:text-amber-400">{pendingTasks}</span>
+        </div>
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center">
+          <span className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Overdue</span>
+          <span className="text-3xl font-bold text-red-600 dark:text-red-400">{overdueTasks}</span>
+        </div>
+      </div>
+
       {/* Header and Controls */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
         <div className="relative flex-1 w-full md:max-w-md">
