@@ -94,6 +94,34 @@ const TaskCard = ({ task, onEdit, statusInfo }) => {
             </p>
           </div>
 
+          {task.subtasks && task.subtasks.length > 0 && (
+            <div className="mb-6">
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
+                Subtasks ({task.subtasks.filter(st => st.completed).length}/{task.subtasks.length})
+              </h4>
+              <div className="space-y-2 bg-white dark:bg-gray-800/80 border border-gray-100 dark:border-gray-700 rounded-lg p-3 shadow-sm">
+                {task.subtasks.map((st) => (
+                  <label key={st.id} className="flex items-start gap-3 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      checked={st.completed}
+                      onChange={(e) => {
+                        const updatedSubtasks = task.subtasks.map(s => 
+                          s.id === st.id ? { ...s, completed: e.target.checked } : s
+                        );
+                        updateTask(task.id, { subtasks: updatedSubtasks });
+                      }}
+                      className="mt-0.5 w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 cursor-pointer"
+                    />
+                    <span className={`text-sm select-none transition-colors ${st.completed ? 'text-gray-400 line-through dark:text-gray-500' : 'text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white'}`}>
+                      {st.title}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <CommentSection task={task} />
             <ActivityLog task={task} />
